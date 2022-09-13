@@ -1,9 +1,7 @@
 export type Product = {
   id: number,
-  name: string,
-  amount: string,
   orderId?: number,
-};
+} & ProductBody;
 
 export type ProductBody = {
   name: string,
@@ -17,3 +15,14 @@ export enum HttpStatusCode {
   INVALID_CREDENTIALS = 401,
   NOT_FOUND = 404,
 }
+
+export type UserBody = {
+  username: string,
+  classe: string,
+  level: number,
+  password: string,
+};
+
+export type User = {
+  id: number,
+};
