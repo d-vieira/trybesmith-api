@@ -8,6 +8,7 @@ export async function create(req: Request<unknown, unknown, ProductBody>, res: R
   return res.status(HttpStatusCode.CREATED).json(product);
 }
 
-export function getAll(): void {
-
+export async function getAll(_req: Request, res: Response) {
+  const data = await productService.getAll();
+  return res.status(HttpStatusCode.OK).json(data);
 }

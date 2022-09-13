@@ -1,6 +1,13 @@
-import { ResultSetHeader } from 'mysql2';
+import { ResultSetHeader, RowDataPacket } from 'mysql2';
 import connection from './connection';
 import { Product, ProductBody } from '../types';
+
+type ProductModel = {
+  id: number,
+  name: string,
+  amount: string,
+  orderId: number,
+} & RowDataPacket;
 
 export async function create(product: ProductBody): Promise<Product> {
   const [data] = await connection.execute<ResultSetHeader>(`
@@ -14,6 +21,9 @@ export async function create(product: ProductBody): Promise<Product> {
   };
 }
 
-export function getAll(): void {
-
+export async function getAll() {
+  const [data] = await connection.execute<ProductModel[]>(`
+    SELECT id, name, amount, orderId FROM Trybesmith.Products
+  `);
+  return data;
 }
