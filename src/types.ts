@@ -26,3 +26,9 @@ export type UserBody = {
 export type User = {
   id: number,
 };
+
+export type Order = {
+  id: number,
+  userId: number,
+  productsIds: number[],
+};
