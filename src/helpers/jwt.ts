@@ -1,4 +1,5 @@
 import Jwt from 'jsonwebtoken';
+import { JwtPayload } from '../types';
 
 const SECRET = 'segredinho';
 const JWT_CONFIG: object = {
@@ -6,7 +7,7 @@ const JWT_CONFIG: object = {
   expiresIn: '1d',
 };
 
-export function createToken(payload: object) {
+export function createToken(payload: JwtPayload) {
   const token = Jwt.sign(payload, SECRET, JWT_CONFIG);
   return token;
 }

@@ -25,10 +25,21 @@ export type UserBody = {
 
 export type User = {
   id: number,
+  username: string,
 };
 
 export type Order = {
   id: number,
   userId: number,
   productsIds: number[],
+};
+
+export type JwtPayload = {
+  id: number,
+  username: string,
+};
+
+export type LoginData = {
+  username: string,
+  password: string,
 };
