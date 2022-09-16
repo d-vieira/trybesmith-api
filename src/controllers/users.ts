@@ -8,12 +8,10 @@ export async function create(req: Request<unknown, unknown, UserBody>, res: Resp
 }
 
 export async function login(req: Request<unknown, unknown, LoginData>, res: Response) {
-  const { code, token } = await userService.login(req.body);
+  const { token } = await userService.login(req.body);
   if (!token) {
-    return res.status(code)
+    return res.status(HttpStatusCode.INVALID_CREDENTIALS)
       .json({ message: 'Username or password invalid' });
   }
-  return res.status(code).json({ token });
+  return res.status(HttpStatusCode.OK).json({ token });
 }
-
-export function xablau() {}

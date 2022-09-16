@@ -14,6 +14,7 @@ export enum HttpStatusCode {
   MISSING_FIELD = 400,
   INVALID_CREDENTIALS = 401,
   NOT_FOUND = 404,
+  ENTITY_ERROR = 422,
 }
 
 export type UserBody = {

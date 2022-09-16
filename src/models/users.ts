@@ -21,5 +21,3 @@ export async function login(loginData: LoginData): Promise<User> {
   `, [loginData.username, loginData.password]);
   return data[0];
 }
-
-export function xablau() {}

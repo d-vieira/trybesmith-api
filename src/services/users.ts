@@ -16,5 +16,3 @@ export async function login(data: LoginData) {
   const token = jwt.createToken({ id: validData.id, username: validData.username });
   return { code: HttpStatusCode.OK, token };
 }
-
-export function xablau() {}
