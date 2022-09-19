@@ -46,6 +46,22 @@ export function createValidation(req: Request, res: Response, next: NextFunction
   next();
 }
 
+const createProductSchema = Joi.object({
+  name: Joi.string().min(3).required(),
+  amount: Joi.string().min(3).required(),
+});
+
+export function productValidation(req: Request, res: Response, next: NextFunction) {
+  const { error } = createProductSchema.validate(req.body);
+  if (error?.message.includes('required')) {
+    return res.status(HttpStatusCode.MISSING_FIELD).json({ message: error.details[0].message });
+  }
+  if (error && !error?.message.includes('required')) {
+    return res.status(HttpStatusCode.ENTITY_ERROR).json({ message: error.details[0].message });
+  }
+  next();
+}
+
 const loginSchema = Joi.object({
   username: Joi.string().required().messages({ 'any.required': '"username" is required' }),
   password: Joi.string().required().messages({ 'any.required': '"password" is required' }),
