@@ -62,6 +62,30 @@ export function productValidation(req: Request, res: Response, next: NextFunctio
   next();
 }
 
+const orderProductsSchema = Joi.object({
+  productsIds: Joi.array().items(Joi.number()).min(1).required(),
+});
+
+export function orderProductsValidation(req: Request, res: Response, next: NextFunction) {
+  const { error } = orderProductsSchema.validate(req.body);
+  if (error?.details[0].type === 'array.min') {
+    return res.status(HttpStatusCode.ENTITY_ERROR).json({
+      message: '"productsIds" must include only numbers',
+    });
+  }
+  if (error?.details[0].type === 'array.base') {
+    return res.status(HttpStatusCode.ENTITY_ERROR).json({
+      message: '"productsIds" must be an array',
+    });
+  }
+  if (error?.details[0].type === 'any.required') {
+    return res.status(HttpStatusCode.MISSING_FIELD).json({
+      message: '"productsIds" is required',
+    });
+  }
+  next();
+}
+
 const loginSchema = Joi.object({
   username: Joi.string().required().messages({ 'any.required': '"username" is required' }),
   password: Joi.string().required().messages({ 'any.required': '"password" is required' }),
