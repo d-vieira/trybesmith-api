@@ -1,4 +1,5 @@
-import { RowDataPacket } from 'mysql2';
+import { ResultSetHeader, RowDataPacket } from 'mysql2';
+import { ProductsOrder } from '../types';
 import connection from './connection';
 
 type OrderModel = {
@@ -17,6 +18,14 @@ export async function getAll() {
   return data;
 }
 
-export function skipDefault() {
-  return 'I DONT WANNA USE EXPORT DEFAULT';
+export async function create(order: ProductsOrder) {
+  const [data] = await connection.execute<ResultSetHeader>(`
+    INSERT INTO Trybesmith.Orders(userId) VALUES (?)
+  `, [order.id]);
+  const query = 'UPDATE Trybesmith.Products SET orderId = ? WHERE id = ?;';
+  order.productsIds.map((product) => connection.execute<ResultSetHeader>(
+    query,
+    [data.insertId, product],
+  ));
+  return { userId: order.id, productsIds: order.productsIds };
 }

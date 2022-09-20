@@ -1,11 +1,12 @@
 import * as orderModel from '../models/orders';
-import { Order } from '../types';
+import { Order, ProductsOrder } from '../types';
 
 export async function getAll(): Promise<Order[]> {
   const order: Order[] = await orderModel.getAll();
   return order;
 }
 
-export function skipDefault() {
-  return 'I DONT WANNA USE EXPORT DEFAULT';
+export async function create(order: ProductsOrder) {
+  const data = await orderModel.create(order);
+  return data;
 }
